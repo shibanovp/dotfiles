@@ -1,0 +1,5 @@
+- name: Install pinentry-tty
+  become: true
+  apt:
+    name: pinentry-tty
+    state: present

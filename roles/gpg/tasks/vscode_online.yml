@@ -1,0 +1,11 @@
+- name: Install gnupg
+  become: true
+  apt:
+    name: gnupg
+    state: present
+- name: Create gpg-agent.conf
+  template:
+    src: gpg-agent.conf.j2
+    dest: "{{lookup('env','HOME')}}/.gnupg/gpg-agent.conf"
+- name: Reload gpg agent
+  shell: gpg-connect-agent reloadagent /bye
