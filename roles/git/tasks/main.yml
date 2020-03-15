@@ -1,0 +1,9 @@
+- name: Install git
+  import_tasks: debian.yml
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: git
+- name: Create .gitconfig
+  template:
+    src: .gitconfig.j2
+    dest: "{{lookup('env','HOME')}}/.gitconfig"
+  tags: git
