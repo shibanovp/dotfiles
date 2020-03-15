@@ -1,0 +1,10 @@
+- name: Install openssh-clent
+  import_tasks: debian.yml
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: ssh
+
+- name: Create .ssh folder
+  file:
+    path: "{{lookup('env','HOME')}}/.ssh"
+    state: directory
+  tags: ssh
