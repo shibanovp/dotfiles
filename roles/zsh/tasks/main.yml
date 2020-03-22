@@ -1,0 +1,14 @@
+- name: change user shell to zsh
+  become: true
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
+  tags: zsh
+- name: Install oh-my-zsh
+  import_tasks: oh_my_zsh.yml
+  tags: ['zsh', 'oh_my_zsh']
+- name: Create .zshrc
+  template:
+    src: .zshrc.j2
+    dest: "{{lookup('env','HOME')}}/.zshrc"
+  tags: 'zsh'

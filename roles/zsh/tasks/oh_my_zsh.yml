@@ -1,0 +1,26 @@
+- name: check if rules file exists
+  stat: 
+    path: "{{lookup('env','HOME')}}/.oh-my-zsh"
+  register: oh_my_zsh
+  tags: ['zsh', 'oh_my_zsh']
+- name: Download zsh installer
+  get_url: 
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/zsh-installer.sh
+    mode: '744'
+  when: oh_my_zsh.stat.exists == False
+  tags: ['zsh', 'oh_my_zsh']
+- name: check if rules file exists
+  stat: 
+    path: /tmp/zsh-installer.sh
+  register: installer
+  tags: ['zsh', 'oh_my_zsh']
+- name: Execute the zsh-installer.sh
+  shell: /tmp/zsh-installer.sh
+  when: oh_my_zsh.stat.exists == False
+  tags: ['zsh', 'oh_my_zsh']
+- name: Remove the zsh-installer.sh
+  file: path=/tmp/zsh-installer.sh state=absent
+  when: installer.stat.exists == True
+  tags: ['zsh', 'oh_my_zsh']
+  
