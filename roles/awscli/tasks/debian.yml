@@ -1,0 +1,19 @@
+- name: check if awscli is installed
+  stat: 
+    path: /usr/local/bin/aws
+  register: awscli
+  tags: awscli
+- name: Download awscli installer
+  unarchive:
+    src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /tmp
+    remote_src: yes
+  when: awscli.stat.exists == False
+  tags: awscli
+- name: Install awscli
+  become: true
+  shell: /tmp/aws/install
+  when: awscli.stat.exists == False
+  tags: awscli
+- name: Delete awscli installer
+  file: path=/tmp/aws state=absent
