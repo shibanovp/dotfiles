@@ -1,0 +1,38 @@
+---
+ - name: Talk to host just so we can learn about it
+   hosts: localhost
+   tasks:
+    - name: Classify host depending on its OS distribution
+      group_by:
+        key: os_{{ ansible_facts['distribution'] }}
+ - hosts: os_Debian
+   tasks:
+    - import_role:
+        name: helm
+    - import_role:
+        name: kubectl
+    - import_role:
+        name: ssh
+    - import_role:
+        name: git
+    - import_role:
+        name: gpg
+    - import_role:
+        name: openvpn
+    - import_role:
+        name: doctl
+    - import_role:
+        name: awscli
+    - import_role:
+        name: vault
+    - import_role:
+        name: zsh
+    - import_role:
+        name: yq
+    - import_role:
+        name: jq
+ - hosts: os_MacOSX
+   gather_facts: False
+   tasks:
+    - import_role:
+        name: ssh
