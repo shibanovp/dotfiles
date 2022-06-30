@@ -1,0 +1,25 @@
+---
+- name: Talk to host just so we can learn about it
+  hosts: all
+  tasks:
+    - name: Classify host depending on its OS distribution
+      group_by:
+        key: os_{{ ansible_facts['distribution'] }}
+- hosts: os_Ubuntu
+  tasks:
+    - name: Update apt
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    - name: Upgrade all
+      apt: upgrade=dist force_apt_get=yes
+    - name: Is reboot required?
+      register: is_reboot_required
+      stat: path=/var/run/reboot-required get_md5=no
+    - name: Rebooting
+      reboot:
+        msg: "kernel updates"
+        connect_timeout: 5
+        reboot_timeout: 600
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: is_reboot_required.stat.exists
