@@ -8,13 +8,16 @@
 - hosts: os_Ubuntu
   tasks:
     - name: Update apt
+      become: yes
       apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
     - name: Upgrade all
+      become: yes
       apt: upgrade=dist force_apt_get=yes
     - name: Is reboot required?
       register: is_reboot_required
       stat: path=/var/run/reboot-required get_md5=no
     - name: Rebooting
+      become: yes
       reboot:
         msg: "kernel updates"
         connect_timeout: 5
