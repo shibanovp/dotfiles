@@ -1,0 +1,17 @@
+- name: Create sonar-scanner-cli directory
+  become: true
+  ansible.builtin.file:
+    path: /opt/sonar-scanner-cli
+    state: directory
+- name: Download sonar-scanner-cli
+  become: true
+  ansible.builtin.unarchive:
+    src: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-{{ sonar_scanner_version }}-linux.zip
+    dest: /opt/sonar-scanner-cli
+    remote_src: yes
+- name: Add sonar-scanner to PATH
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/profile.d/sonar-scanner.sh
+    content: "PATH=$PATH:/opt/sonar-scanner-cli/sonar-scanner-{{ sonar_scanner_version }}-linux/bin"
+    mode: u=rw,g=r,o=r
