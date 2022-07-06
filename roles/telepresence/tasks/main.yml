@@ -1,0 +1,6 @@
+- name: Download telepresence
+  become: true
+  get_url:
+    url: https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence
+    dest: /usr/local/bin/telepresence
+    mode: 0755
