@@ -1,0 +1,6 @@
+- name: Install zip and unzip
+  become: True
+  apt:
+    pkg:
+      - zip
+      - unzip
