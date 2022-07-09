@@ -1,0 +1,15 @@
+- name: Check if arduino-cli is installed
+  stat:
+    path: /usr/local/bin/arduino-cli
+  register: arduino_cli
+  tags: arduino_cli
+- name: Download arduino-cli
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/arduino/arduino-cli/releases/download/0.24.0/arduino-cli_0.24.0_Linux_64bit.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    include:
+      - "arduino-cli"
+  when: arduino_cli.stat.exists == False
+  tags: arduino_cli
