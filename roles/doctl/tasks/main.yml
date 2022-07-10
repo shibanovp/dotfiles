@@ -1,9 +1,9 @@
 - name: Install doctl
   become: true
   unarchive:
-    src: https://github.com/digitalocean/doctl/releases/download/v1.38.0/doctl-1.38.0-linux-amd64.tar.gz
+    src: "{{doctl_url}}"
     dest: /usr/local/bin
     remote_src: yes
-  args:  
+  args:
     creates: /usr/local/bin/doctl
   tags: doctl
