@@ -1,0 +1,15 @@
+- name: Check if mklittlefs is installed
+  stat:
+    path: /usr/local/bin/mklittlefs
+  register: mklittlefs
+  tags: mklittlefs
+- name: Download mklittlefs
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/earlephilhower/mklittlefs/releases/download/3.0.0/x86_64-linux-gnu-mklittlefs-295fe9b.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+  when: mklittlefs.stat.exists == False
+  tags: mklittlefs
