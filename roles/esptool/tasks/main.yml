@@ -1,0 +1,4 @@
+- name: Install esptool
+  pip:
+    name: esptool
+    state: latest
