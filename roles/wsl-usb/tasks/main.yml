@@ -1,0 +1,13 @@
+- name: Install wsl2-usb dependencies
+  become: true
+  apt:
+    pkg:
+      - linux-tools-virtual
+      - hwdata
+- name: Select installed usbip
+  become: true
+  community.general.alternatives:
+    name: usbip
+    link: /usr/local/bin/usbip
+    path: /usr/lib/linux-tools/5.4.0-107-generic/usbip
+    priority: 20
