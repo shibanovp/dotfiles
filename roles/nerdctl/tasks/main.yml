@@ -1,0 +1,11 @@
+- name: Install nerdctl
+  become: true
+  ansible.builtin.unarchive:
+    src: "{{ nerdctl_url }}"
+    dest: /usr/local/bin
+    remote_src: yes
+    include:
+      - "nerdctl"
+  args:
+    creates: /usr/local/bin/nerdctl
+  tags: nerdctl
