@@ -1,0 +1,12 @@
+- name: Create CNI_PATH directory
+  become: true
+  ansible.builtin.file:
+    path: /opt/cni/bin
+    state: directory
+- name: Install cni-plugins
+  become: true
+  ansible.builtin.unarchive:
+    src: "{{ cni_plugins_url }}"
+    dest: /opt/cni/bin
+    remote_src: yes
+  tags: cni_plugins
