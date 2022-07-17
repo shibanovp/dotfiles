@@ -1,0 +1,7 @@
+- name: Make sure a service unit is running
+  become: true
+  ansible.builtin.systemd:
+    state: stopped
+    daemon_reload: yes
+    enabled: no
+    name: buildkitd

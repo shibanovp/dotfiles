@@ -1,0 +1,13 @@
+- name: Create buildkitd.service
+  become: true
+  template:
+    src: buildkitd.service.j2
+    dest: /etc/systemd/system/buildkitd.service
+  tags: buildkit
+- name: Make sure a service unit is running
+  become: true
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: yes
+    enabled: yes
+    name: buildkitd

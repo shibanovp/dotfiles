@@ -1,1 +1,2 @@
 buildkit_url: https://github.com/moby/buildkit/releases/download/v0.10.3/buildkit-v0.10.3.linux-amd64.tar.gz
+containerd_address: /var/run/containerd/containerd.sock

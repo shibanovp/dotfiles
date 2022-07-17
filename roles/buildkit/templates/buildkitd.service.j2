@@ -1,0 +1,11 @@
+[Unit]
+Description=Buildkit daemon service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=buildkitd --oci-worker=false --containerd-worker=true --containerd-worker-addr {{ containerd_address }}
+
+
+[Install]
+WantedBy=multi-user.target
