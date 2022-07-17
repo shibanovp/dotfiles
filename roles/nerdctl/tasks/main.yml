@@ -9,3 +9,15 @@
   args:
     creates: /usr/local/bin/nerdctl
   tags: nerdctl
+- name: Create nerdctl rootful config directory
+  become: true
+  file:
+    path: /etc/nerdctl
+    state: directory
+    mode: 0755
+  tags: nerdctl
+- name: Create nerdctl.toml
+  become: true
+  template:
+    src: nerdctl.toml.j2
+    dest: /etc/nerdctl/nerdctl.toml
