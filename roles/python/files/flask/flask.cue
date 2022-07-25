@@ -3,19 +3,25 @@ package flask
 
 import (
     "dagger.io/dagger"
-    "dagger.io/dagger/core"
+    // "dagger.io/dagger/core"
+    "universe.dagger.io/docker"
 )
 
 dagger.#Plan & {
-    client: env: GREETING: string | *"flask"
-    actions: {
-        image: core.#Pull & {
-            source: "alpine:3"
-        }
-        test: core.#Exec & {
-            input: image.output
-            args: ["echo", "Testing \(client.env.GREETING) app"]
-            always: true
-        }
+    client: filesystem: ".": read: contents: dagger.#FS
+    actions: 
+        ci: docker.#Build & {
+            steps: [
+                docker.#Dockerfile & {
+                    source: client.filesystem.".".read.contents
+                },
+                docker.#Run & {
+                    command: {
+                        name: "python"
+                        args: ["-m", "pytest", "-v"]
+                    }
+                    always: true
+                }
+            ]
     }
 }
