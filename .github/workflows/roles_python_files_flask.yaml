@@ -17,4 +17,4 @@ jobs:
           workdir: ./roles/python/files/flask
           cmds: |
             project update
-            do ci
+            do test
