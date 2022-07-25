@@ -8,9 +8,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Run ci
         uses: dagger/dagger-for-github@v3
-        workdir: ./roles/python/files/flask
         with:
           version: 0.2.25
+          workdir: ./roles/python/files/flask
           cmds: |
             project update
 
