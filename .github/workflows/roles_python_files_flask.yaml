@@ -1,0 +1,8 @@
+name: roles_python_files_flask
+on: push
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: roles_python_files_flask
+        run: echo "roles_python_files_flask"
