@@ -1,0 +1,20 @@
+name: roles_python_files_flask
+on:
+  push:
+    paths:
+      - roles/python/files/flask/**
+      - .github/workflows/roles_python_files_flask.yaml
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+      - name: Run ci
+        uses: dagger/dagger-for-github@v3
+        with:
+          version: 0.2.25
+          workdir: ./roles/python/files/flask
+          cmds: |
+            project update
+            do ci

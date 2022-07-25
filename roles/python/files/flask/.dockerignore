@@ -129,3 +129,7 @@ dmypy.json
 .pyre/
 
 Dockerfile
+
+# CI
+cue.mod
+flask.cue
