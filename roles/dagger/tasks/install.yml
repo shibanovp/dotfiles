@@ -1,0 +1,25 @@
+- name: Create temporary file
+  ansible.builtin.tempfile:
+    state: file
+    suffix: _dagger.sh
+  register: temp_install_file
+  tags: dagger
+- name: Download dagger installer
+  ansible.builtin.get_url:
+    url: https://dl.dagger.io/dagger/install.sh
+    dest: "{{ temp_install_file.path }}"
+    force: yes
+  tags: dagger
+- name: Run dagger install
+  become: yes
+  ansible.builtin.script: "{{ temp_install_file.path }}"
+  args:
+    chdir: "{{ dagger_path }}"
+  environment:
+    DAGGER_VERSION: "{{ dagger_version }}"
+  tags: dagger
+- name: Delete dagger installer
+  file:
+    path: "{{ temp_install_file.path }}"
+    state: absent
+  tags: dagger

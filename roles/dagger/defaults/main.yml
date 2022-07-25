@@ -1,0 +1,3 @@
+# dagger istalls in a /bin folder.
+dagger_path: /usr/local
+dagger_version: 0.2.24

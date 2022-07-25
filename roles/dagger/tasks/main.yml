@@ -1,0 +1,8 @@
+- name: Check if dagger is installed
+  stat:
+    path: "{{ dagger_path }}/bin/dagger"
+  register: dagger
+  tags: dagger
+- name: Install dagger
+  import_tasks: install.yml
+  when: dagger.stat.exists == False
