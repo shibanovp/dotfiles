@@ -2,7 +2,7 @@ from flask import json
 from project import create_app
 
 
-def test_healthz():
+def test_readyz():
     flask_app = create_app()
 
     with flask_app.test_client() as test_client:
