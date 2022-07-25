@@ -1,5 +1,9 @@
 name: roles_python_files_flask
-on: push
+on:
+  push:
+    paths:
+      - roles/python/files/flask/**
+      - .github/workflows/roles_python_files_flask.yaml
 jobs:
   ci:
     runs-on: ubuntu-latest
