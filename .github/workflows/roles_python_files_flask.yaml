@@ -7,9 +7,13 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_roles_python_files_flask
+      DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_roles_python_files_flask
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
+
       - name: Run ci
         uses: dagger/dagger-for-github@v3
         with:
