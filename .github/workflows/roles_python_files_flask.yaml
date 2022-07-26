@@ -23,6 +23,10 @@ jobs:
             project update
             do test
       - name: Run tests and push image
+        env:
+          REGISTRY_IMAGE: ghcr.io/${{ github.repository }}-python-flask:${{ github.sha }}
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         if: github.ref == 'refs/heads/feature/push-image'
         uses: dagger/dagger-for-github@v3
         with:
