@@ -13,8 +13,7 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
-
-      - name: Run ci
+      - name: Run tests
         if: github.ref != 'refs/heads/master'
         uses: dagger/dagger-for-github@v3
         with:
@@ -23,3 +22,12 @@ jobs:
           cmds: |
             project update
             do test
+      - name: Run tests and push image
+        if: github.ref == 'refs/heads/feature/push-image'
+        uses: dagger/dagger-for-github@v3
+        with:
+          version: 0.2.25
+          workdir: ./roles/python/files/flask
+          cmds: |
+            project update
+            do push
