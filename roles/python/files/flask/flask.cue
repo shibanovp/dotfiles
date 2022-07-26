@@ -9,7 +9,14 @@ import (
 )
 
 dagger.#Plan & {
-    client: filesystem: ".": read: contents: dagger.#FS
+    client: {
+        filesystem: ".": read: contents: dagger.#FS
+        env: {
+            REGISTRY_IMAGE: string | *"flask:latest"
+            DOCKER_USERNAME: dagger.#Secret
+            DOCKER_PASSWORD: dagger.#Secret
+        }
+    }
     actions: {
         image: docker.#Dockerfile & {
             source: client.filesystem.".".read.contents
@@ -69,5 +76,17 @@ dagger.#Plan & {
                 }
             }
         }
+        push: {
+            docker.#Push & {
+                "image": image.output
+                dest:    client.env.REGISTRY_IMAGE
+                auth: {
+                    username: "admin"
+                    secret: client.env.DOCKER_PASSWORD
+                }
+            }
+            _dep: test
+        }
     }
 }
+
