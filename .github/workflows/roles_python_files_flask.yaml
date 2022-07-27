@@ -19,7 +19,7 @@ jobs:
         if: github.ref != 'refs/heads/master'
         uses: dagger/dagger-for-github@v3
         with:
-          version: $DAGGER_VERSION
+          version: ${{ env.DAGGER_VERSION }}
           workdir: ./roles/python/files/flask
           cmds: |
             project update
@@ -33,7 +33,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         uses: dagger/dagger-for-github@v3
         with:
-          version: $DAGGER_VERSION
+          version: ${{ env.DAGGER_VERSION }}
           workdir: ./roles/python/files/flask
           cmds: |
             project update
