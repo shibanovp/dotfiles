@@ -8,6 +8,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
+      DAGGER_VERSION: 0.2.26
       DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_roles_python_files_flask
       DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_roles_python_files_flask
     steps:
@@ -18,7 +19,7 @@ jobs:
         if: github.ref != 'refs/heads/master'
         uses: dagger/dagger-for-github@v3
         with:
-          version: 0.2.25
+          version: ${{ env.DAGGER_VERSION }}
           workdir: ./roles/python/files/flask
           cmds: |
             project update
@@ -32,7 +33,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         uses: dagger/dagger-for-github@v3
         with:
-          version: 0.2.25
+          version: ${{ env.DAGGER_VERSION }}
           workdir: ./roles/python/files/flask
           cmds: |
             project update
