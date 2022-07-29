@@ -14,7 +14,7 @@ dagger.#Plan & {
             IMAGE: string | *"dagger"
             DAGGER_VERSION: string | *"0.0.0"
             DOCKER_USERNAME: string | *"dagger"
-            DOCKER_PASSWORD: dagger.#Secret
+            DOCKER_PASSWORD: dagger.#Secret | *"dagger"
         }
     }
     actions: {
