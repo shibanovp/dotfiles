@@ -26,10 +26,10 @@ jobs:
             project update
             do test
 
-      - name: Run tests and push image
+      - name: Run tests and push tagged image
         if: github.ref == 'refs/heads/master'
         env:
-          IMAGE: ghcr.io/${{ github.repository }}-dagger
+          IMAGE: ghcr.io/${{ github.repository }}-dagger:${{ env.DAGGER_VERSION }}
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         uses: dagger/dagger-for-github@v3
@@ -40,10 +40,10 @@ jobs:
             project update
             do push
 
-      - name: Run tests and push image
+      - name: Run tests and push latest image
         if: github.ref == 'refs/heads/master'
         env:
-          IMAGE: ghcr.io/${{ github.repository }}-dagger:${{ env.DAGGER_VERSION }}
+          IMAGE: ghcr.io/${{ github.repository }}-dagger
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         uses: dagger/dagger-for-github@v3
