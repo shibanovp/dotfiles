@@ -2,6 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
+    ":preserveSemverRanges",
     "docker:enableMajor",
     "docker:pinDigests",
     "regexManagers:dockerfileVersions",
@@ -9,12 +10,6 @@
   ],
   "assignees": ["shibanovp"],
   "prCreation": "immediate",
-  "packageRules": [
-    {
-      "matchPackageNames": ["renovate"],
-      "stabilityDays": 0
-    }
-  ],
 
   "regexManagers": [
     {

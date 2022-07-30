@@ -9,7 +9,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      DAGGER_VERSION: 0.2.26 # renovate: datasource=github-releases lookupName=dagger/dagger versioning=docker
+      DAGGER_VERSION: 0.2.26 # renovate: datasource=github-releases lookupName=dagger/dagger versioning=node
       DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_roles_dagger_files_image
       DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_roles_dagger_files_image
     steps:
