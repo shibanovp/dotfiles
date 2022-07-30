@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", "docker:enableMajor", "docker:pinDigests"],
+  "extends": [
+    "config:base",
+    "docker:enableMajor",
+    "docker:pinDigests",
+    "regexManagers:dockerfileVersions"
+  ],
   "assignees": ["shibanovp"],
   "prCreation": "immediate",
   "packageRules": [
@@ -11,14 +16,6 @@
   ],
 
   "regexManagers": [
-    {
-      "description": "Update _VERSION variables in Dockerfiles",
-      "fileMatch": ["(^|/|\\.)Dockerfile$", "(^|/)Dockerfile\\.[^/]*$"],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>.+?)(?: (?:packageName|lookupName)=(?<packageName>.+?))?(?: versioning=(?<versioning>[a-z-]+?))?\\s(?:ENV|ARG) .+?_VERSION=(?<currentValue>.+?)\\s"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
-    },
     {
       "description": "Update `version:` and `_VERSION:` variables in github workflows",
       "fileMatch": ["^\\.github\\/workflows\\/[^/]+\\.ya?ml$"],
