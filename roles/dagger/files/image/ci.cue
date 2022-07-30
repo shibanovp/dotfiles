@@ -2,6 +2,7 @@
 package ci
 
 import (
+    "strings"
     "dagger.io/dagger"
 	"dagger.io/dagger/core"
     "universe.dagger.io/docker"
@@ -12,7 +13,7 @@ dagger.#Plan & {
         filesystem: ".": read: contents: dagger.#FS
         env: {
             IMAGE: string | *"dagger"
-            DAGGER_VERSION: string | *"0.0.0"
+            DAGGER_RELEASE_VERSION: string | *"0.0.0"
             DOCKER_USERNAME: string | *"dagger"
             DOCKER_PASSWORD?: dagger.#Secret
         }
@@ -21,13 +22,13 @@ dagger.#Plan & {
         build: {
             docker.#Dockerfile & {
                 source: client.filesystem.".".read.contents
-                buildArg: DAGGER_VERSION: client.env.DAGGER_VERSION
+                buildArg: DAGGER_RELEASE_VERSION: client.env.DAGGER_RELEASE_VERSION
             }
         }
         test: core.#Exec & {
             input: build.output.rootfs
             env: {
-                DAGGER_VERSION: client.env.DAGGER_VERSION
+                DAGGER_VERSION: strings.TrimPrefix(client.env.DAGGER_RELEASE_VERSION, "v")
             }
             args: [
                 "sh", "-c",
@@ -35,7 +36,7 @@ dagger.#Plan & {
                 #"""
                     case $(dagger version) in
                     "dagger $DAGGER_VERSION"*) exit 0 ;;
-                    *) echo expected $DAGGER_VERSION actual $(dagger version); exit 1 ;;
+                    *) echo expected dagger $DAGGER_VERSION actual $(dagger version); exit 1 ;;
                     esac
                     """#,
             ]
