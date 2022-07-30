@@ -8,7 +8,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      DAGGER_VERSION: 0.2.27 # renovate: datasource=github-releases lookupName=dagger/dagger versioning=npm
+      DAGGER_VERSION: 0.2.26 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=node
       DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_roles_python_files_flask
       DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_roles_python_files_flask
     steps:
