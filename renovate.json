@@ -4,7 +4,8 @@
     "config:base",
     "docker:enableMajor",
     "docker:pinDigests",
-    "regexManagers:dockerfileVersions"
+    "regexManagers:dockerfileVersions",
+    "helpers:pinGitHubActionDigests"
   ],
   "assignees": ["shibanovp"],
   "prCreation": "immediate",
