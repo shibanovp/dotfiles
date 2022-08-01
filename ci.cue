@@ -153,6 +153,7 @@ dagger.#Plan & {
                                 -e "ansible_port=${PORT}" \
                                 -i roles/ansible/files/image/alpine_ansible/inventory \
                                 -l ubuntu_host
+                                -vvv
                                 """#
                         ]
                         always: true
@@ -198,6 +199,7 @@ dagger.#Plan & {
                                 -e "ansible_port=${PORT}" \
                                 -i roles/ansible/files/image/alpine_ansible/inventory \
                                 -l ubuntu_host
+                                -vvv
                                 """#
                         ]
                         always: true
