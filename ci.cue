@@ -152,7 +152,7 @@ dagger.#Plan & {
                                 ansible-playbook terraform.yml \
                                 -e "ansible_port=${PORT}" \
                                 -i roles/ansible/files/image/alpine_ansible/inventory \
-                                -l ubuntu_host
+                                -l ubuntu_host \
                                 -vvv
                                 """#
                         ]
@@ -198,7 +198,7 @@ dagger.#Plan & {
                                 ansible-playbook vagrant.yml \
                                 -e "ansible_port=${PORT}" \
                                 -i roles/ansible/files/image/alpine_ansible/inventory \
-                                -l ubuntu_host
+                                -l ubuntu_host \
                                 -vvv
                                 """#
                         ]
