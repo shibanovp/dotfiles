@@ -1,0 +1,8 @@
+[ubuntu_host]
+127.0.0.1
+[ubuntu_host:vars]
+remote_user=ubuntu
+ansible_user=ubuntu
+ansible_ssh_pass=ubuntu
+ansible_port=2222
+host_key_checking=false

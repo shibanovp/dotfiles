@@ -31,14 +31,7 @@ dagger.#Plan & {
                 DAGGER_VERSION: strings.TrimPrefix(client.env.DAGGER_RELEASE_VERSION, "v")
             }
             args: [
-                "sh", "-c",
-                
-                #"""
-                    case $(dagger version) in
-                    "dagger $DAGGER_VERSION"*) exit 0 ;;
-                    *) echo expected dagger $DAGGER_VERSION actual $(dagger version); exit 1 ;;
-                    esac
-                    """#,
+                "sh", "verify_version.sh"
             ]
             always: true
         }
