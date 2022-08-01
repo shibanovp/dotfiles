@@ -2,7 +2,7 @@
   import_tasks: debian.yml
   when: ansible_facts['os_family'] == 'Debian'
   tags: gpg
-- name: Configure vscode-online
-  import_tasks: vscode_online.yml
-  when: ansible_system_vendor == 'Microsoft Corporation'
-  tags: gpg
+# - name: Configure vscode-online
+#   import_tasks: vscode_online.yml
+#   when: ansible_system_vendor == 'Microsoft Corporation'
+#   tags: gpg

@@ -1,0 +1,14 @@
+
+- name: Install dependency
+  ansible.builtin.include_role:
+    name: gpg
+- name: Add hashicorp Apt signing key
+  become: true
+  ansible.builtin.apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+- name: Add hashicorp Apt repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
