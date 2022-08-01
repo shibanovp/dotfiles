@@ -1,8 +1,8 @@
 - name: Install hashicorp apt signing key and add repository
   ansible.builtin.include_role:
     name: hashicorp
-- name: Install terraform
+- name: Install vagrant
   become: true
   apt:
-    name: terraform
+    name: vagrant
     state: present

@@ -1,4 +1,4 @@
-name: roles
+name: ansible
 
 on: push
 jobs:
@@ -20,4 +20,4 @@ jobs:
           version: ${{ steps.vars.outputs.DAGGER_VERSION }}
           cmds: |
             project update
-            do test_role
+            do test
