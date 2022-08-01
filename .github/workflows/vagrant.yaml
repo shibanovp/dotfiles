@@ -1,0 +1,42 @@
+name: ansible
+
+on: push
+jobs:
+  ci:
+    runs-on: macos-12
+    env:
+      DAGGER_RELEASE_VERSION: v0.2.27 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=docker
+      DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_vagrant
+      DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_vagrant
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache Vagrant boxes
+        uses: actions/cache@v2
+        with:
+          path: ~/.vagrant.d/boxes
+          key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+          restore-keys: |
+            ${{ runner.os }}-vagrant-
+
+      - name: Show Vagrant version
+        run: vagrant --version
+
+      - name: Run vagrant up
+        run: vagrant up
+
+      - name: ssh into box after boot
+        run: vagrant ssh -c "echo 'hello world!'"
+
+      - name: Set DAGGER_VERSION
+        id: vars
+        run: echo ::set-output name=DAGGER_VERSION::${DAGGER_RELEASE_VERSION:1}
+      - name: Clone repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+      - name: Run tests
+        uses: dagger/dagger-for-github@46924d81463a52e60895f90b1ae6d89394ccb69c # tag=v3
+        with:
+          version: ${{ steps.vars.outputs.DAGGER_VERSION }}
+          cmds: |
+            project update
+            do test
