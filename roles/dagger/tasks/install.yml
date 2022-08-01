@@ -1,3 +1,6 @@
+- name: Install dependency
+  ansible.builtin.include_role:
+    name: curl
 - name: Create temporary file
   ansible.builtin.tempfile:
     state: file
@@ -8,11 +11,12 @@
   ansible.builtin.get_url:
     url: https://dl.dagger.io/dagger/install.sh
     dest: "{{ temp_install_file.path }}"
+    mode: 0755
     force: yes
   tags: dagger
 - name: Run dagger install
   become: yes
-  ansible.builtin.script: "{{ temp_install_file.path }}"
+  ansible.builtin.command: "{{ temp_install_file.path }}"
   args:
     chdir: "{{ dagger_path }}"
   environment:
@@ -22,4 +26,9 @@
   file:
     path: "{{ temp_install_file.path }}"
     state: absent
+  tags: dagger
+- name: Verify dagger installation
+  ansible.builtin.script: "{{ role_path }}/files/image/verify_version.sh"
+  environment:
+    DAGGER_VERSION: "{{ dagger_version }}"
   tags: dagger

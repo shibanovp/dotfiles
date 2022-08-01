@@ -18,7 +18,6 @@ jobs:
         uses: dagger/dagger-for-github@46924d81463a52e60895f90b1ae6d89394ccb69c # tag=v3
         with:
           version: ${{ steps.vars.outputs.DAGGER_VERSION }}
-          workdir: ./roles/dagger/files/image
           cmds: |
             project update
-            do test
+            do test_role
