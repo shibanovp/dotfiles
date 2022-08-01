@@ -1,0 +1,24 @@
+name: roles
+
+on: push
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    env:
+      DAGGER_RELEASE_VERSION: v0.2.27 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=docker
+      DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_roles
+      DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_roles
+    steps:
+      - name: Set DAGGER_VERSION
+        id: vars
+        run: echo ::set-output name=DAGGER_VERSION::${DAGGER_RELEASE_VERSION:1}
+      - name: Clone repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+      - name: Run tests
+        uses: dagger/dagger-for-github@46924d81463a52e60895f90b1ae6d89394ccb69c # tag=v3
+        with:
+          version: ${{ steps.vars.outputs.DAGGER_VERSION }}
+          workdir: ./roles/dagger/files/image
+          cmds: |
+            project update
+            do test
