@@ -12,11 +12,8 @@ jobs:
     steps:
       - name: Test value
         id: test_vars
-        run: |
-          echo '::echo::on'
-          echo ::set-output name=TEST_RELEASE::${DAGGER_RELEASE_VERSION:1}
-          VAGRANT_HOST=`echo -n ' HostName 127.0.0.1' | awk '/^\s*HostName / { print $2 }'`
-          echo ::set-output name=TEST_CMD::$VAGRANT_HOST
+        shell: echo ::set-output name=TEST_CMD::$(echo -n ' HostName 127.0.0.1' | awk '/^\s*HostName / { print $2 }')
+
       - uses: actions/checkout@v2
 
       - name: Cache Vagrant boxes
