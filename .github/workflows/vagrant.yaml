@@ -11,12 +11,11 @@ jobs:
       DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_vagrant
     steps:
       - name: Test value
-          id: test_vars
-          run: |
-            echo '::echo::on'
-            echo ::set-output name=TEST_RELEASE::${DAGGER_RELEASE_VERSION:1}
-            echo ::set-output name=TEST_CMD::${DAGGER_RELEASE_VERSION:1}
-            echo "::set-output name=VAGRANT_HOST::$(vagrant ssh-config | awk '/^\s+HostName / { print $2 }')"
+        id: test_vars
+        run: |
+          echo '::echo::on'
+          echo ::set-output name=TEST_RELEASE::${DAGGER_RELEASE_VERSION:1}
+          echo "::set-output name=TEST_CMD::$(echo ' HostName 127.0.0.1' | awk '/^\s*HostName / { print $2 }')"
       - uses: actions/checkout@v2
 
       - name: Cache Vagrant boxes
