@@ -24,7 +24,7 @@ jobs:
         run: vagrant --version
 
       - name: Install ansible
-        run: python3 -m pip install --user ansible-core==${{ env.ANSIBLE_CORE_VERSION }}
+        run: python3 -m pip install ansible-core==${{ env.ANSIBLE_CORE_VERSION }}
 
       - name: ansible-playbook version
         run: ansible-playbook --version
