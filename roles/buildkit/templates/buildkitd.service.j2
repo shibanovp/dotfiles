@@ -4,7 +4,11 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=buildkitd --oci-worker=false --containerd-worker=true --containerd-worker-addr {{ containerd_address }}
+ExecStart=buildkitd \
+    --addr {{ buildkit_addr }} \
+    --oci-worker={{ oci_worker }} \
+    --containerd-worker={{ containerd_worker }} \
+    {% if containerd_worker %} --containerd-worker-addr={{ containerd_address }} {% endif %}
 
 
 [Install]

@@ -1,0 +1,11 @@
+---
+- name: Talk to host just so we can learn about it
+  hosts: all
+  tasks:
+    - name: Classify host depending on its OS distribution
+      group_by:
+        key: os_{{ ansible_facts['distribution'] }}
+- hosts: os_Ubuntu
+  tasks:
+    - import_role:
+        name: dagger

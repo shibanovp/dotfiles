@@ -1,0 +1,6 @@
+buildkit_url: https://github.com/moby/buildkit/releases/download/v0.10.3/buildkit-v0.10.3.linux-amd64.tar.gz
+buildkit_addr: /run/buildkit/buildkitd.sock
+oci_worker: true
+oci_worker_binary: runc
+containerd_worker: false
+containerd_address: /var/run/containerd/containerd.sock
