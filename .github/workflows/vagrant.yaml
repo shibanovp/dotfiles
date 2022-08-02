@@ -26,9 +26,6 @@ jobs:
       - name: Install ansible
         run: python3 -m pip install ansible-core==${{ env.ANSIBLE_CORE_VERSION }}
 
-      - name: ansible-playbook version
-        run: ansible-playbook --version
-
       - name: Run vagrant up
         run: vagrant up
 
@@ -38,10 +35,13 @@ jobs:
       - name: Set DAGGER_VERSION
         id: vars
         run: echo ::set-output name=DAGGER_VERSION::${DAGGER_RELEASE_VERSION:1}
+        run: echo ::set-output name=VAGRANT_HOST::vagrant ssh-config | awk '/^\s+HostName / { print $2 }'
       - name: Clone repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
       - name: Run tests
         uses: dagger/dagger-for-github@46924d81463a52e60895f90b1ae6d89394ccb69c # tag=v3
+        env:
+          BUILDKIT_HOST: tcp://${{ steps.vars.outputs.VAGRANT_HOST }}:1234
         with:
           version: ${{ steps.vars.outputs.DAGGER_VERSION }}
           cmds: |
