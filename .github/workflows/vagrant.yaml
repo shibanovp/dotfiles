@@ -13,7 +13,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
       - name: Cache Vagrant boxes
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.vagrant.d/boxes
           key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
@@ -32,7 +32,7 @@ jobs:
       - name: ssh into box after boot
         run: vagrant ssh -c "echo 'hello world!'"
 
-      - name: Test value
+      - name: Set vars
         id: vars
         run: |
           echo ::set-output name=DAGGER_VERSION::${DAGGER_RELEASE_VERSION:1}
