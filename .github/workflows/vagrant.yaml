@@ -36,10 +36,10 @@ jobs:
         id: vars
         run: echo ::set-output name=DAGGER_VERSION::${DAGGER_RELEASE_VERSION:1}
       - name: Test value
-        run: vagrant ssh-config | awk '/^\s+HostName / { print $2 }'
+        run: vagrant ssh-config | awk '/^\s+HostName / { print $2 }' | cat
       - name: Set VAGRANT_HOST
         id: vagrant_vars
-        run: echo "::set-output name=VAGRANT_HOST::$(vagrant ssh-config | awk '/^\s+HostName / { print $2 }')"
+        run: echo "::set-output name=VAGRANT_HOST::$(vagrant ssh-config | awk '/^\s+HostName / { print $2 }' | cat)"
       - name: Clone repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
       - name: Run tests
