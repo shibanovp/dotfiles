@@ -8,4 +8,11 @@
 - hosts: os_Ubuntu
   tasks:
     - import_role:
+        name: crun
+    - import_role:
         name: buildkit
+    - import_role:
+        name: buildkit
+        tasks_from: start
+      vars:
+        buildkit_addr: tcp://0.0.0.0:1234

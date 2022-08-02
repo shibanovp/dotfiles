@@ -46,3 +46,4 @@ jobs:
           version: ${{ steps.vars.outputs.DAGGER_VERSION }}
           cmds: |
             project update
+            do test
