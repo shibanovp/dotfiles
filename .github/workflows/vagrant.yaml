@@ -10,14 +10,6 @@ jobs:
       DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_vagrant
       DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_vagrant
     steps:
-      - name: Test value
-        id: test_vars
-        shell: bash
-        run: |
-          echo '::echo::on'
-          echo ::set-output name=TEST_RELEASE::${DAGGER_RELEASE_VERSION:1}
-          TEST_CMD=$(echo -n ' HostName 127.0.0.1' | awk '/^\s*HostName / { print $2 }')
-          echo ::set-output name=TEST_CMD::${TEST_CMD}
       - uses: actions/checkout@v2
       - name: Cache Vagrant boxes
         uses: actions/cache@v2
@@ -42,10 +34,8 @@ jobs:
       - name: Test value
         id: vars
         run: |
-          echo '::echo::on'
           echo ::set-output name=DAGGER_VERSION::${DAGGER_RELEASE_VERSION:1}
-          echo "$(vagrant ssh-config | awk '/^\s+HostName / { print $2 }')"
-          echo "::set-output name=VAGRANT_HOST::$(python3 roles/vagrant/files/get_host.py)"
+          echo ::set-output name=VAGRANT_HOST::$(python3 roles/vagrant/files/get_host.py)
       - name: Clone repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
       - name: Run tests
@@ -56,4 +46,3 @@ jobs:
           version: ${{ steps.vars.outputs.DAGGER_VERSION }}
           cmds: |
             project update
-            # do test
