@@ -4,10 +4,21 @@
     src: buildkitd.service.j2
     dest: /etc/systemd/system/buildkitd.service
   tags: buildkit
+- name: Create /etc/buildkit directory
+  become: true
+  ansible.builtin.file:
+    path: /etc/buildkit
+    state: directory
+- name: Create buildkitd.toml
+  become: true
+  template:
+    src: buildkitd.toml.j2
+    dest: /etc/buildkit/buildkitd.toml
+  tags: buildkit
 - name: Make sure a service unit is running
   become: true
   ansible.builtin.systemd:
-    state: started
+    state: restarted
     daemon_reload: yes
     enabled: yes
     name: buildkitd

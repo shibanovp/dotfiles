@@ -16,3 +16,4 @@
         tasks_from: start
       vars:
         buildkit_addr: tcp://0.0.0.0:1234
+        oci_worker_binary: crun

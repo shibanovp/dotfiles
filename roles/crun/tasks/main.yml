@@ -18,3 +18,28 @@
       - python3
       - automake
     state: present
+- name: Git checkout
+  become: true
+  ansible.builtin.git:
+    repo: 'https://github.com/containers/crun.git'
+    dest: /opt/crun
+    version: "{{ crun_version }}"
+- name: Autogen crun
+  become: true
+  command:
+    cmd: ./autogen.sh
+    chdir: /opt/crun
+- name: Configure crun
+  become: true
+  command:
+    cmd: ./configure
+    chdir: /opt/crun
+- name: Make crun
+  become: true
+  community.general.make:
+    chdir: /opt/crun
+- name: Install crun
+  become: yes
+  community.general.make:
+    chdir: /opt/crun
+    target: install
