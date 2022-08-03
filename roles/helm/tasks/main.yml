@@ -1,4 +1,12 @@
 - name: Install helm
-  import_tasks: debian.yml
-  when: ansible_facts['os_family'] == 'Debian'
+  ansible.builtin.import_tasks: debian.yml
+  when: os_family == 'Debian'
   tags: helm
+- name: Get version
+  ansible.builtin.shell: "helm version --short"
+  register: helm_version_result
+  tags: helm
+- name: Check version
+  ansible.builtin.fail:
+    msg: "expected helm version {{ helm_version }} but got {{ helm_version_result.stdout }}"
+  when: "not helm_version_result.stdout.startswith(helm_version)"

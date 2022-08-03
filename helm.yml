@@ -1,0 +1,6 @@
+---
+- name: Install helm
+  hosts: all
+  tasks:
+    - import_role:
+        name: helm
