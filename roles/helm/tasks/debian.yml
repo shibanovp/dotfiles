@@ -1,11 +1,11 @@
 - name: Install helm
   become: True
-  unarchive:
-    src: https://get.helm.sh/helm-v3.1.1-linux-amd64.tar.gz
+  ansible.builtin.unarchive:
+    src: https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz
     dest: /usr/local/bin
     creates: /usr/local/bin/helm
-    extra_opts: 
-    - --strip=1
-    - --wildcards
-    - '*/helm'
+    extra_opts:
+      - --strip=1
+      - --wildcards
+      - "*/helm"
     remote_src: True
