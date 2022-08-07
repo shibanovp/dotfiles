@@ -6,7 +6,7 @@
 - name: Download sonar-scanner-cli
   become: true
   ansible.builtin.unarchive:
-    src: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-{{ sonar_scanner_version }}-linux.zip
+    src: https://github.com/SonarSource/sonar-scanner-cli/archive/refs/tags/{{ sonar_scanner_version }}.tar.gz
     dest: /opt/sonar-scanner-cli
     remote_src: yes
 - name: Add sonar-scanner to PATH
