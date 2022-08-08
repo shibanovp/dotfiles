@@ -9,15 +9,21 @@ import (
 dagger.#Plan & {
     client: {
         env: {
-            IMAGE: string | *"cra-typescript"
-            DOCKER_USERNAME: string | *"typescript"
+            IMAGE?: string | *"cra-typescript"
+            DOCKER_USERNAME?: string | *"typescript"
             DOCKER_PASSWORD?: dagger.#Secret
         }
-        filesystem: "./roles/react/files/cra/typescript": read: contents: dagger.#FS
+        filesystem: {
+            context: read: {
+                // set the build context
+                path: "./roles/react/files/cra/typescript" 
+                contents: dagger.#FS
+            }
+        }
     }
     actions: {
         image: docker.#Dockerfile & {
-            source: client.filesystem."./roles/react/files/cra/typescript".read.contents
+            source: client.filesystem.context.read.contents
             target: "builder"
         }
         test: {
@@ -34,7 +40,7 @@ dagger.#Plan & {
             }
         }
         prod_image: docker.#Dockerfile & {
-            source: client.filesystem."./roles/react/files/cra/typescript".read.contents
+            source: client.filesystem.context.read.contents
             _dep: test
         }
         push: {
