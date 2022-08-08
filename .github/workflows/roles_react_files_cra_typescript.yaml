@@ -33,7 +33,7 @@ jobs:
           workdir: ${{ env.DAGGER_WORKSPACE }}
           cmds: |
             project update
-            dagger --plan ${{ env.DAGGER_PLAN }} do test
+            --plan ${{ env.DAGGER_PLAN }} do test
 
       - name: Run tests and push image
         if: github.ref == 'refs/heads/master'
@@ -47,4 +47,4 @@ jobs:
           workdir: ${{ env.DAGGER_WORKSPACE }}
           cmds: |
             project update
-            dagger --plan ${{ env.DAGGER_PLAN }} do push
+            --plan ${{ env.DAGGER_PLAN }} do push
