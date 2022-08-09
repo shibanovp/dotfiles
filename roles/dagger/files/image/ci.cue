@@ -4,13 +4,19 @@ package ci
 import (
     "strings"
     "dagger.io/dagger"
-	"dagger.io/dagger/core"
+    "dagger.io/dagger/core"
     "universe.dagger.io/docker"
 )
 
 dagger.#Plan & {
     client: {
-        filesystem: ".": read: contents: dagger.#FS
+        filesystem: {
+            context: read: {
+                // set the build context
+                path: "./roles/dagger/files/image" 
+                contents: dagger.#FS
+            }
+        }
         env: {
             IMAGE: string | *"dagger"
             DAGGER_RELEASE_VERSION: string | *"0.0.0"
@@ -19,16 +25,17 @@ dagger.#Plan & {
         }
     }
     actions: {
-        build: {
+        _daggerVersion: strings.TrimPrefix(client.env.DAGGER_RELEASE_VERSION, "v")
+        image: {
             docker.#Dockerfile & {
-                source: client.filesystem.".".read.contents
+                source: client.filesystem.context.read.contents
                 buildArg: DAGGER_RELEASE_VERSION: client.env.DAGGER_RELEASE_VERSION
             }
         }
         test: core.#Exec & {
-            input: build.output.rootfs
+            input: image.output.rootfs
             env: {
-                DAGGER_VERSION: strings.TrimPrefix(client.env.DAGGER_RELEASE_VERSION, "v")
+                DAGGER_VERSION: _daggerVersion
             }
             args: [
                 "sh", "verify_version.sh"
@@ -36,8 +43,16 @@ dagger.#Plan & {
             always: true
         }
         push: {
-            docker.#Push & {
-                "image": build.output
+            tagged: docker.#Push & {
+                "image": image.output
+                dest:    strings.Join([client.env.IMAGE,_daggerVersion], ":")
+                auth: {
+                    username: client.env.DOCKER_USERNAME
+                    secret: client.env.DOCKER_PASSWORD
+                }
+            }
+            latest: docker.#Push & {
+                "image": image.output
                 dest:    client.env.IMAGE
                 auth: {
                     username: client.env.DOCKER_USERNAME
