@@ -1,5 +1,5 @@
 
-package flask
+package ci
 
 import (
     "time"
@@ -10,16 +10,22 @@ import (
 
 dagger.#Plan & {
     client: {
-        filesystem: ".": read: contents: dagger.#FS
         env: {
-            REGISTRY_IMAGE: string | *"flask:latest"
-            DOCKER_USERNAME: dagger.#Secret
-            DOCKER_PASSWORD: dagger.#Secret
+            IMAGE?: string | *"flask"
+            DOCKER_USERNAME?: string | *"flask"
+            DOCKER_PASSWORD?: dagger.#Secret
+        }
+        filesystem: {
+            context: read: {
+                // set the build context
+                path: "./roles/python/files/flask" 
+                contents: dagger.#FS
+            }
         }
     }
     actions: {
         image: docker.#Dockerfile & {
-            source: client.filesystem.".".read.contents
+            source: client.filesystem.context.read.contents
         }
         test: {
             functional: docker.#Run & {
@@ -79,9 +85,9 @@ dagger.#Plan & {
         push: {
             docker.#Push & {
                 "image": image.output
-                dest:    client.env.REGISTRY_IMAGE
+                dest:    client.env.IMAGE
                 auth: {
-                    username: "admin"
+                    username: client.env.DOCKER_USERNAME
                     secret: client.env.DOCKER_PASSWORD
                 }
             }
@@ -89,4 +95,3 @@ dagger.#Plan & {
         }
     }
 }
-
