@@ -4,15 +4,15 @@ package ci
 import (
     "time"
     "dagger.io/dagger"
-	"dagger.io/dagger/core"
+    "dagger.io/dagger/core"
     "universe.dagger.io/docker"
 )
 
 dagger.#Plan & {
     client: {
         env: {
-            IMAGE?: string | *"cra-typescript"
-            DOCKER_USERNAME?: string | *"typescript"
+            IMAGE?: string | *"fastapi"
+            DOCKER_USERNAME?: string | *"fastapi"
             DOCKER_PASSWORD?: dagger.#Secret
         }
         filesystem: {
