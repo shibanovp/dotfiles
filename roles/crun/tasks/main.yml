@@ -18,6 +18,7 @@
       - python3
       - automake
     state: present
+    update_cache: yes
 - name: Git checkout
   become: true
   ansible.builtin.git:
