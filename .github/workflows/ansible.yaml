@@ -5,7 +5,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      DAGGER_RELEASE_VERSION: v0.2.30 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=docker
+      DAGGER_RELEASE_VERSION: v0.2.32 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=docker
       DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_roles
       DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_roles
     steps:
