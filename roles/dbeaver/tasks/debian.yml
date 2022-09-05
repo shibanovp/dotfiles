@@ -1,0 +1,4 @@
+- name: Install a .deb package from the internet
+  become: true
+  ansible.builtin.apt:
+    deb: "{{ dbeaver_deb }}"

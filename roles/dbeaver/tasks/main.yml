@@ -1,0 +1,4 @@
+- name: Install dbeaver
+  ansible.builtin.import_tasks: debian.yml
+  when: os_family == 'Debian'
+  tags: dbeaver
