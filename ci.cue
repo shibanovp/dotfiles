@@ -1,5 +1,5 @@
 
-package flask
+package ci
 
 import (
     "time"
@@ -122,9 +122,54 @@ dagger.#Plan & {
                         _dep:   sigterm
                     }
                 }
+                dbeaver: {
+                    _port: "2224"
+                    start_ubuntu_host_start: core.#Start & {
+                        input: ubuntu_host_image.output.rootfs
+                        env: {
+                            PORT: _port
+                        }
+                        args: [
+                            "sh", "-c", "exec /usr/sbin/sshd -D -p $PORT"
+                        ]
+                    }
+                    ansible_role: core.#Exec & {
+                        input: alpine_ansible_image.output.rootfs
+                        env: {
+                            HOME: "/home/ansible"
+                            ANSIBLE_HOST_KEY_CHECKING: "False"
+                            PATH: "/home/ansible/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+                        }
+                        user: "ansible"
+                        env: {
+                            PORT: _port
+                        }
+                        args: [
+                            "sh", "-c",
+                            #"""
+                                ansible ubuntu_host \
+                                -m include_role -a "name=dbeaver" \
+                                -e "ansible_port=${PORT}" \
+                                -i roles/ansible/files/image/alpine_ansible/inventory
+                                """#
+                        ]
+                        always: true
+                        _dep: start_ubuntu_host_start
+                    }
+                    sigterm: core.#SendSignal & {
+                        input:  start_ubuntu_host_start
+                        signal: core.SIGTERM
+                        _dep:   ansible_role
+                    }
+                    stop: core.#Stop & {
+                        input:   start_ubuntu_host_start
+                        timeout: time.Second * 10
+                        _dep:   sigterm
+                    }
+                }
                 
                 helm: {
-                    _port: "2224"
+                    _port: "2225"
                     start_ubuntu_host_start: core.#Start & {
                         input: ubuntu_host_image.output.rootfs
                         env: {
@@ -170,7 +215,7 @@ dagger.#Plan & {
                 }
 
                 sonarqube: {
-                    _port: "2225"
+                    _port: "2226"
                     start_ubuntu_host_start: core.#Start & {
                         input: ubuntu_host_image.output.rootfs
                         env: {
