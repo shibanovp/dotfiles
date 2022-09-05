@@ -149,7 +149,7 @@ dagger.#Plan & {
                             #"""
                                 ansible ubuntu_host \
                                 -m include_role -a "name=dbeaver" \
-                                -e "ansible_port=${PORT}" \
+                                -e "ansible_port=${PORT}  os_family=Debian" \
                                 -i roles/ansible/files/image/alpine_ansible/inventory
                                 """#
                         ]
