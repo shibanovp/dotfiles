@@ -7,6 +7,14 @@
         key: os_{{ ansible_facts['distribution'] }}
 - hosts: os_Ubuntu
   tasks:
+    - name: Add or modify nofile soft limit
+      become: yes
+      community.general.pam_limits:
+        domain: "*"
+        limit_type: soft
+        limit_item: nofile
+        value: 10000
+
     - import_role:
         name: crun
     - import_role:
