@@ -1,0 +1,5 @@
+installer: https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
+installer_checksum: sha256:e7ecbccbc197ebd7e1f211c59df2e37bc6959d081f2235d387e08c9026666acd
+installation_path: "{{ lookup('env','HOME') }}/anaconda3"
+shell: bash
+os_family: "{{ ansible_facts['os_family'] }}"

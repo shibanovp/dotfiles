@@ -1,0 +1,39 @@
+- name: Install anaconda deps
+  import_tasks: debian.yml
+  when: os_family == 'Debian'
+  tags: anaconda
+
+- name: Create temporary file
+  ansible.builtin.tempfile:
+    state: file
+    suffix: _anaconda.sh
+  register: temp_install_file
+  tags: anaconda
+
+- name: Install get_url dependency
+  ansible.builtin.include_role:
+    name: curl
+  tags: anaconda
+
+- name: Download anaconda installer
+  ansible.builtin.get_url:
+    url: "{{ installer }}"
+    dest: "{{ temp_install_file.path }}"
+    checksum: "{{ installer_checksum }}"
+    mode: 0755
+    force: yes
+  tags: anaconda
+
+- name: Install anaconda in silent mode
+  ansible.builtin.script: "{{ temp_install_file.path }} -b -p {{ installation_path }}"
+  args:
+    executable: /bin/bash
+  tags: anaconda
+
+- name: Configure anaconda
+  ansible.builtin.shell: |
+    eval "$({{ installation_path }}/bin/conda shell.{{ shell }} hook)"
+    conda init {{ shell }}
+  args:
+    executable: "/bin/{{ shell }}"
+  tags: anaconda-init
