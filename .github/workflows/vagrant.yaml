@@ -5,7 +5,7 @@ jobs:
   ci:
     runs-on: macos-12
     env:
-      ANSIBLE_CORE_VERSION: 2.13.4 # renovate: datasource=pypi depName=ansible-core versioning=pep440
+      ANSIBLE_CORE_VERSION: 2.14.1 # renovate: datasource=pypi depName=ansible-core versioning=pep440
       DAGGER_RELEASE_VERSION: v0.2.36 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=docker
       DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_vagrant
       DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_vagrant
