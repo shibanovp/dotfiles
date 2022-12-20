@@ -1,4 +1,4 @@
-FROM python:3.10.7-alpine3.16@sha256:6015c8fd6d6c1acf529f8165c51e35172a2a8aa1a8fa72d7d2e0e3ce1700739a
+FROM python:3.10.7-alpine3.16@sha256:486782edd7f7363ffdc256fc952265a5cbe0a6e047a6a1ff51871d2cdb665351
 RUN apk add --no-cache ca-certificates openssh-client sshpass
 RUN adduser -D ansible 
 RUN chown -R ansible:ansible /home/ansible
