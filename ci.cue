@@ -286,7 +286,7 @@ dagger.#Plan & {
                         args: [
                             "sh", "-c",
                             #"""
-                                ansible-playbook terraform.yml \
+                                ansible-playbook playbooks/terraform.yml \
                                 -e "ansible_port=${PORT}" \
                                 -i roles/ansible/files/image/alpine_ansible/inventory \
                                 -l ubuntu_host
@@ -331,7 +331,7 @@ dagger.#Plan & {
                         args: [
                             "sh", "-c",
                             #"""
-                                ansible-playbook vagrant.yml \
+                                ansible-playbook playbooks/vagrant.yml \
                                 -e "ansible_port=${PORT}" \
                                 -i roles/ansible/files/image/alpine_ansible/inventory \
                                 -l ubuntu_host
