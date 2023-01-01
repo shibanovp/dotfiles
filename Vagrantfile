@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 1234, host: 1234
 
     config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "buildkit.yml"
+        ansible.playbook = "playbooks/buildkit.yml"
     end
 
     # Prevent SharedFoldersEnableSymlinksCreate errors
