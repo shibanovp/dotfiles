@@ -1,0 +1,42 @@
+---
+- name: Talk to host just so we can learn about it
+  hosts: all
+  tasks:
+    - name: Classify host depending on its OS distribution
+      group_by:
+        key: os_{{ ansible_facts['distribution'] }}
+- hosts: os_Ubuntu
+  tasks:
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+    - name: Allow 'wheel' group to have passwordless sudo
+      become: yes
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: "^%wheel"
+        line: "%wheel ALL=(ALL) NOPASSWD: ALL"
+        validate: "/usr/sbin/visudo -cf %s"
+    - name: Create a new regular user with sudo privileges
+      become: yes
+      user:
+        name: ubuntu
+        state: present
+        groups: wheel,adm
+        append: true
+        create_home: true
+        shell: /bin/bash
+    - name: Creates directory
+      file:
+        path: /home/ubuntu/.ssh
+        state: directory
+        owner: ubuntu
+    - name: Copy file with owner and permission
+      ansible.builtin.copy:
+        src: /root/.ssh/authorized_keys
+        remote_src: yes
+        dest: /home/ubuntu/.ssh/authorized_keys
+        owner: ubuntu
+        group: ubuntu
