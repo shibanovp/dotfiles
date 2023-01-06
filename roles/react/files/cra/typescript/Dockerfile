@@ -1,4 +1,4 @@
-FROM node:16.18.1@sha256:68fc9f749931453d5c8545521b021dd97267e0692471ce15bdec0814ed1f8fc3 AS builder
+FROM node:16.18.1@sha256:7f404d09ceb780c51f4fac7592c46b8f21211474aacce25389eb0df06aaa7472 AS builder
 WORKDIR /srv
 
 COPY ./package*.json ./
