@@ -13,7 +13,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
       - name: Cache Vagrant boxes
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3
         with:
           path: ~/.vagrant.d/boxes
           key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
