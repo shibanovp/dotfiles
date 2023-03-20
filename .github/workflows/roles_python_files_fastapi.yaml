@@ -24,7 +24,7 @@ jobs:
 
       - name: Set PUSH_IMAGE
         if: endsWith(github.ref, '/fastapi-migrate-to-dagger-v0.4')
-        run: echo "::set-env name=PUSH_IMAGE::True"
+        run: echo "PUSH_IMAGE=True" >> $GITHUB_ENV
 
       - name: Run CI
         run: python roles/python/files/fastapi/ci.py
