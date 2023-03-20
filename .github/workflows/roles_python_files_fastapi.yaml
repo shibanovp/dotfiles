@@ -4,45 +4,33 @@ on:
     paths:
       - roles/python/files/fastapi/**
       - .github/workflows/roles_python_files_fastapi.yaml
-      - cue.mod/** # cue.mod is a dagger dependencies
-      
+
 jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      DAGGER_RELEASE_VERSION: v0.2.36 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=docker
-      DAGGER_CACHE_FROM: type=gha,scope=dagger_cache_roles_python_files_fastapi
-      DAGGER_CACHE_TO: type=gha,mode=max,scope=dagger_cache_roles_python_files_fastapi
-      DAGGER_PLAN: roles/python/files/fastapi/ci.cue
-      IMAGE_SUFFIX: -fastapi
-      
-    steps:
-      - name: Set DAGGER_VERSION
-        id: vars
-        run: echo ::set-output name=DAGGER_VERSION::${DAGGER_RELEASE_VERSION:1}
+      IMAGE: ghcr.io/${{ github.repository }}-fastapi
 
+    steps:
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
       - name: Clone repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
 
-      - name: Run tests
-        if: github.ref != 'refs/heads/master'
-        uses: dagger/dagger-for-github@75549c92b94513311d37a80f2732cc3399f9af86 # v3
-        with:
-          version: ${{ steps.vars.outputs.DAGGER_VERSION }}
-          cmds: |
-            project update
-             do test --plan ${{ env.DAGGER_PLAN }}
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-      - name: Run tests and push image
-        if: github.ref == 'refs/heads/master'
-        env:
-          IMAGE: ghcr.io/${{ github.repository }}${{ env.IMAGE_SUFFIX }}
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set PUSH_IMAGE
+        if: endsWith(github.ref, '/fastapi-migrate-to-dagger-v0.4')
+        run: echo "PUSH_IMAGE=True" >> $GITHUB_ENV
 
-        uses: dagger/dagger-for-github@75549c92b94513311d37a80f2732cc3399f9af86 # v3
+      - uses: docker/login-action@v2
         with:
-          version: ${{ steps.vars.outputs.DAGGER_VERSION }}
-          cmds: |
-            project update
-            do push --plan ${{ env.DAGGER_PLAN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run CI
+        run: python roles/python/files/fastapi/ci.py
