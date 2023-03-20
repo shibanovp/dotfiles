@@ -15,18 +15,13 @@ jobs:
       - name: Set PUSH_IMAGE
         if: endsWith(github.ref, '/master')
         run: echo "::set-env name=PUSH_IMAGE::True"
-     - name: Setup python
+      - name: Setup python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
           cache: "pip"
-
       - name: Clone repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-
-      - run: pwd
-      
-      - run: ls -lah
 
       - name: Install dependencies
         run: pip install -r requirements.txt
