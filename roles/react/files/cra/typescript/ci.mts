@@ -7,12 +7,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const CONTEXT = process.env.CONTEXT || __dirname;
-const PUSH_IMAGE = process.env.PUSH_IMAGE === 'true'
-const IMAGE = process.env.IMAGE || 'cra'
+const PUSH_IMAGE = process.env.PUSH_IMAGE
+  ? process.env.PUSH_IMAGE.toLowerCase() === "true"
+  : false;
+
+const IMAGE = process.env.IMAGE || "cra";
 
 connect(
   async (client: Client) => {
-
     const context = client.host().directory(CONTEXT);
     const image = client
       .container()
@@ -22,14 +24,11 @@ connect(
       .withEnvVariable("CI", "true")
       .withExec(["npm", "test"]);
 
-    // execute
     await image.exitCode();
 
     if (PUSH_IMAGE) {
-        const prodImage = client
-        .container()
-        .build(context)
-        await prodImage.publish(IMAGE)
+      const prodImage = client.container().build(context);
+      await prodImage.publish(IMAGE);
     }
   },
   { LogOutput: process.stdout }
