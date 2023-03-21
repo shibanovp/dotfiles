@@ -16,7 +16,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
-          node-version: ${{ env.NODE_VERSION }} 
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Clone repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Set PUSH_IMAGE
-        if: endsWith(github.ref, 'refactor/node-version-renovate')
+        if: endsWith(github.ref, '/master')
         run: echo "PUSH_IMAGE=True" >> $GITHUB_ENV
 
       - uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2
