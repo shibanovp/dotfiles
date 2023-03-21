@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version: 16
 
@@ -27,7 +27,7 @@ jobs:
         if: endsWith(github.ref, '/master')
         run: echo "PUSH_IMAGE=True" >> $GITHUB_ENV
 
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}

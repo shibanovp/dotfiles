@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Setup python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435 # v4
         with:
           python-version: 3.11
       - name: Clone repository
@@ -26,7 +26,7 @@ jobs:
         if: endsWith(github.ref, '/master')
         run: echo "PUSH_IMAGE=True" >> $GITHUB_ENV
 
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
