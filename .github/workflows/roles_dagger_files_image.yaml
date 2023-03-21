@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         if: github.ref != 'refs/heads/master'
-        uses: dagger/dagger-for-github@75549c92b94513311d37a80f2732cc3399f9af86 # v3
+        uses: dagger/dagger-for-github@ff0c9f22539625fbee4a1846f0278c4220cd092d # v4
         with:
           version: ${{ steps.vars.outputs.DAGGER_VERSION }}
           cmds: |
@@ -40,7 +40,7 @@ jobs:
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
-        uses: dagger/dagger-for-github@75549c92b94513311d37a80f2732cc3399f9af86 # v3
+        uses: dagger/dagger-for-github@ff0c9f22539625fbee4a1846f0278c4220cd092d # v4
         with:
           version: ${{ steps.vars.outputs.DAGGER_VERSION }}
           cmds: |
