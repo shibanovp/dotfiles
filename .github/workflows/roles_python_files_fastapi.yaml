@@ -23,7 +23,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Set PUSH_IMAGE
-        if: endsWith(github.ref, '/fastapi-migrate-to-dagger-v0.4')
+        if: endsWith(github.ref, '/master')
         run: echo "PUSH_IMAGE=True" >> $GITHUB_ENV
 
       - uses: docker/login-action@v2
