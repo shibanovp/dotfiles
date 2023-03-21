@@ -1,6 +1,7 @@
 [ubuntu_host]
-127.0.0.1
+host
 [ubuntu_host:vars]
+os_family=Debian
 remote_user=ubuntu
 ansible_user=ubuntu
 ansible_ssh_pass=ubuntu
