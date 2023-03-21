@@ -15,6 +15,10 @@ const IMAGE = process.env.IMAGE || "cra";
 
 connect(
   async (client: Client) => {
+    console.log({
+      IMAGE,
+      PUSH_IMAGE,
+    });
     const context = client.host().directory(CONTEXT);
     const image = client
       .container()
