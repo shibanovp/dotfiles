@@ -9,13 +9,14 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
+      PYTHON_VERSION: 3.10 # renovate: datasource=docker depName=python versioning=docker
       IMAGE: ghcr.io/${{ github.repository }}-flask
 
     steps:
       - name: Setup python
         uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435 # v4
         with:
-          python-version: 3.11
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Clone repository
         uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3
 
