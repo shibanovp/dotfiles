@@ -3,6 +3,6 @@ pydantic==1.10.6
 uvicorn==0.21.1
 pytest==7.2.1
 httpx==0.23.3
-locust==2.15.0
+locust==2.15.1
 black==23.1.0
 dagger-io==0.4.1
