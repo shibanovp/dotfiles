@@ -9,7 +9,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      PYTHON_VERSION: 3.10 # renovate: datasource=docker depName=python versioning=docker
+      PYTHON_VERSION: "3.10" # renovate: datasource=docker depName=python versioning=docker
       IMAGE: ghcr.io/${{ github.repository }}-flask
 
     steps:
