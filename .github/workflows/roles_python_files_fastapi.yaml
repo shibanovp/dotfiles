@@ -9,10 +9,11 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      PYTHON_VERSION: "3.10" # renovate: datasource=docker depName=python versioning=docker
+      PYTHON_VERSION: 3.10 # renovate: datasource=docker depName=python versioning=docker
       IMAGE: ghcr.io/${{ github.repository }}-fastapi
 
     steps:
+      - run: echo "$PYTHON_VERSION"
       - name: Setup python
         uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435 # v4
         with:
