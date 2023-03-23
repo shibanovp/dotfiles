@@ -1,6 +1,6 @@
 FROM alpine:3.17.2@sha256:ff6bdca1701f3a8a67e328815ff2346b0e4067d32ec36b7992c1fdc001dc8517 as builder
 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=npm
-ARG DAGGER_RELEASE_VERSION=v0.4.1
+ARG DAGGER_RELEASE_VERSION=v0.4.2
 WORKDIR /usr/local
 RUN apk add --no-cache curl bash
 # ${DAGGER_RELEASE_VERSION:1} drops v from the version
