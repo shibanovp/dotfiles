@@ -1,4 +1,4 @@
-FROM python:slim@sha256:1477a0435ac7d84dad2b8d69217f1b2c49656a44259f3d8a12d053fda16187f9
+FROM python:slim@sha256:2f749ef90f54fd4b3c77cde78eec23ab5b8199d9ac84e4ced6ae523ef223ef7b
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
