@@ -1,1 +1,1 @@
-crun_version: 1.8.2 # renovate: datasource=github-releases depName=crun lookupName=containers/crun versioning=docker
+crun_version: 1.8.3 # renovate: datasource=github-releases depName=crun lookupName=containers/crun versioning=docker
