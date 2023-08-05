@@ -1,1 +1,1 @@
-sonar_scanner_version: 4.8.0.2856 # renovate: datasource=github-releases depName=sonar-scanner-cli lookupName=SonarSource/sonar-scanner-cli versioning=docker
+sonar_scanner_version: 5.0.1.3006 # renovate: datasource=github-releases depName=sonar-scanner-cli lookupName=SonarSource/sonar-scanner-cli versioning=docker
