@@ -6,7 +6,7 @@ RUN npm ci
 COPY . ./
 RUN npm run build
 
-FROM nginx:alpine@sha256:2d194184b067db3598771b4cf326cfe6ad5051937ba1132b8b7d4b0184e0d0a6
+FROM nginx:alpine@sha256:db353d0f0c479c91bd15e01fc68ed0f33d9c4c52f3415e63332c3d0bf7a4bb77
 RUN rm -rf /usr/share/nginx/html
 COPY --from=builder /srv/build /usr/share/nginx/html
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
