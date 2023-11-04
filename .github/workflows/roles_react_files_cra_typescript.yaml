@@ -9,7 +9,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      NODE_VERSION: 19 # renovate: datasource=docker depName=node versioning=docker
+      NODE_VERSION: 21 # renovate: datasource=docker depName=node versioning=docker
       IMAGE: ghcr.io/${{ github.repository }}-cra-typescript
 
     steps:
