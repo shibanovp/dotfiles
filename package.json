@@ -1,7 +1,0 @@
-{
-  "name": "dotfiles",
-  "devDependencies": {
-    "@dagger.io/dagger": "^0.6.0",
-    "ts-node": "^10.9.1"
-  }
-}
