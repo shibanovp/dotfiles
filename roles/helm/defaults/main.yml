@@ -1,2 +1,2 @@
-helm_version: v3.13.1 # renovate: datasource=github-releases depName=helm lookupName=helm/helm versioning=docker
+helm_version: v3.13.2 # renovate: datasource=github-releases depName=helm lookupName=helm/helm versioning=docker
 os_family: "{{ ansible_facts['os_family'] }}"
