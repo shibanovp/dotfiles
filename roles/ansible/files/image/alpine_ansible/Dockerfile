@@ -5,7 +5,7 @@ RUN chown -R ansible:ansible /home/ansible
 USER ansible
 ENV PATH="/home/ansible/.local/bin:${PATH}"
 # renovate: datasource=pypi depName=ansible-core versioning=pep440
-ARG ANSIBLE_CORE_VERSION=2.15.5
+ARG ANSIBLE_CORE_VERSION=2.16.0
 RUN python3 -m pip install --user ansible-core==${ANSIBLE_CORE_VERSION}
 COPY . ./
 COPY roles/ansible/files/image/alpine_ansible/inventory /etc/ansible/hosts
