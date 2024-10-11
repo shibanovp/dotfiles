@@ -1,4 +1,4 @@
 # dagger installs in a /bin folder.
 dagger_path: /usr/local
-dagger_release_version: v0.5.1 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=docker
+dagger_release_version: v0.13.5 # renovate: datasource=github-releases depName=dagger lookupName=dagger/dagger versioning=docker
 dagger_version: "{{ dagger_release_version[1:] }}"
