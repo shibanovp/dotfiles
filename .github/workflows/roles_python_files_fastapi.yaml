@@ -27,7 +27,7 @@ jobs:
         if: endsWith(github.ref, '/master')
         run: echo "PUSH_IMAGE=True" >> $GITHUB_ENV
 
-      - uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
