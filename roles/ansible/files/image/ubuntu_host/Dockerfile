@@ -1,4 +1,4 @@
-FROM ubuntu:jammy@sha256:2b7412e6465c3c7fc5bb21d3e6f1917c167358449fecac8176c6e496e5c1f05f
+FROM ubuntu:jammy@sha256:f64b2ffc2f10ab8f8505aa56b2664bd846cbb9df87c7e2532e30f7667021c0e6
 RUN apt-get update \
     && DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends \
     ca-certificates openssh-server sudo python3 \
